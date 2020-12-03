@@ -1,5 +1,6 @@
 <script>
 //the entire script should be inserted in tag manager.
+//the script should execute on defined triggers in google tag manager (gtm), most likely click triggers on proceed buttons or similar
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -11,14 +12,18 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create', 'UA-xxxxxx-x', 'auto', {'storage': 'none'});
 var gtmgapage = '';
 
-//gtm. from tag manager is the page load
+//gtm.js from tag manager is the page load
+//so on page load the gtmgapage variable is set then.. (check next comment)
 
 if({{Event}}=="gtm.js"){
   ga('send', 'pageview', "/funnel"+location.pathname);
   ga('send', 'event', "funnel"+location.pathname);
   gtmgapage = location.pathname;
 }
-  
+
+//there are no more page loads so an interval is created where the page path must be different than the stored gtmgapage variable
+//if it is gtmgapgage is set again and the interal is stopped
+
 if(gtminterval){clearInterval(gtminterval)}
 
 var gtminterval = setInterval(function(){
